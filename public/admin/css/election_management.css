@@ -1,0 +1,152 @@
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+ul ul {
+    display: none; /* Hide nested lists by default */
+    margin-left: 20px;
+}
+.toggle-btn {
+    cursor: pointer;
+    /*color: blue;*/
+}
+
+.election_management {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.election_view {
+    width: 90%;
+    background-color: #dedede;
+    border-radius: 20px;
+    margin: 10px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+.elections {
+    padding: 0 40px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    font-weight: normal;
+    gap: 10px;
+}
+tr,
+th {
+    border: 1px solid black;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 5px 0;
+}
+
+button {
+    border-radius: 20px;
+    width: 150px;
+    border: none;
+    background-color: #edaa2e;
+    color: white;
+    height: 25px;
+}
+button:hover {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal content styling */
+.modal-content {
+    background-color: #dedede;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    height: 80%;
+}
+
+/* Close button */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Section label styling */
+.section-label {
+    display: flex;
+    align-items: center;
+    margin: 20px 0 10px;
+}
+
+.section-label span {
+    background: #dedede;
+    padding: 0 10px;
+    font-weight: bold;
+}
+
+.section-label hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid #ccc;
+    margin-left: 10px;
+}
+
+/* Form styling */
+
+.election-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.modal-content label {
+    width: 30%;
+    margin-right: 5px;
+}
+
+input,
+select,
+textarea {
+    width: 70%;
+    background-color: white;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}

@@ -1,0 +1,164 @@
+.upper_card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.election_card {
+    background-color: #edaa2e;
+    border-radius: 20px;
+    padding: 10px;
+    width: 80%;
+}
+
+.election {
+    display: flex;
+    justify-content: center;
+}
+
+select {
+    border-radius: 5px;
+    width: 80%;
+    padding: 5px;
+    border: none;
+    background-color: transparent;
+    border-bottom: 1px solid;
+    text-align: center;
+    font-family: "Saira", 'Times New Roman', sans-serif;
+}
+
+.election select {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.election_container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.countdown {
+    width: 50%;
+}
+
+.election_container p {
+    font-size: 30px;
+    padding: 0;
+    margin: 0;
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.lower_card {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+    /* background-color: red; */
+}
+
+.cards {
+    background-color: #dedede;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    height: 60vh;
+    flex: 1;
+}
+
+.card_heading {
+    text-align: center;
+}
+
+.ballot_stats {
+    display: flex;
+    flex-direction: column;
+}
+
+.ballots {
+    margin-top: 10px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding: 10px;
+    flex: 1;
+}
+
+.ballots > div {
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.ballot_name {
+    font-size: 18px;
+}
+
+.no_of_candidates {
+    font-size: 13px;
+}
+
+.candidates {
+    background-color: white;
+    margin-top: 10px;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.candidates p {
+    font-size: 18px;
+    width: fit-content;
+}
+
+.candidates span {
+    font-size: 12px;
+}
+
+.candidates table tr:nth-child(even) td {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+}
+
+.top_candidates {
+    background-color: white;
+    border-radius: 20px;
+}
+
+.top_candidates td {
+    padding-right: 20px;
+}
+
+.top_candidates table tr td:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+}
+
+.top_candidates p {
+    font-weight: initial;
+    padding-bottom: 5px;
+}
+
+.top_candidates span {
+    font-size: 12px;
+}
+
+.top_candidates table tr td:nth-child(3) {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.voter_turnout {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.turnout {
+    width: 100%;
+}
