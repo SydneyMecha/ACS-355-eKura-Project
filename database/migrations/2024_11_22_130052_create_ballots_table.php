@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('ballots', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description');
-            $table->string('type');
-            $table->foreignId('election_id');
+            $table->unsignedBigInteger('election_id'); // Foreign key column
+            $table->foreign('election_id')->references('id')->on('elections')->onDelete('cascade');
+            $table->string('ballot_name');
+            $table->text('ballot_description');
+            $table->string('ballot_status')->default('active');
             $table->timestamps();
         });
     }

@@ -10,5 +10,12 @@ class Ballot extends Model
     /** @use HasFactory<\Database\Factories\BallotFactory> */
     use HasFactory;
 
-    protected $table = 'ballot';
+    protected $fillable = [
+        'election_id',
+        'ballot_name',
+        'ballot_description',
+        'ballot_status',
+    ];
+
+    protected $table = 'ballots';
 }

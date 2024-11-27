@@ -37,7 +37,9 @@
         <div id="electionModal" class="modal-overlay" style="display: none;">
             <div class="modal-content">
                 <span class="close-button" onclick="closeElectionForm()"><i class="fa-solid fa-circle-xmark"></i></span>
-                <form class="election-form">
+                <form class="election-form" method="post" action="{{ route('election.store') }}">
+                    @csrf
+                    @method('post')
 
                     <!-- Election Details Section -->
                     <div class="section-label">
@@ -55,83 +57,14 @@
                         <textarea id="description" name="description" required></textarea>
                     </div>
 
-                    <!-- Schedule Section -->
-                    <div class="section-label">
-                        <span>Schedule</span>
-                        <hr>
+                    <div class="form-row">
+                        <label for="startDateTime">Start Date and Time:</label>
+                        <input type="datetime-local" id="startDateTime" name="startDateTime" required>
                     </div>
 
                     <div class="form-row">
-                        <label for="startDate">Start Date:</label>
-                        <input type="date" id="startDate" name="startDate" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="endDate">End Date:</label>
-                        <input type="date" id="endDate" name="endDate" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="timeZone">Time Zone:</label>
-                        <input type="text" id="timeZone" name="timeZone" required>
-                    </div>
-
-                    <!-- Eligibility Section -->
-                    <div class="section-label">
-                        <span>Eligibility</span>
-                        <hr>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="jurisdiction">Jurisdiction:</label>
-                        <input type="text" id="jurisdiction" name="jurisdiction" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="eligibility">Eligibility:</label>
-                        <textarea id="eligibility" name="eligibility" required></textarea>
-                    </div>
-
-                    <!-- Authorities Section -->
-                    <div class="section-label">
-                        <span>Authorities</span>
-                        <hr>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="authorityName">Name:</label>
-                        <input type="text" id="authorityName" name="authorityName" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="authorityTitle">Title:</label>
-                        <input type="text" id="authorityTitle" name="authorityTitle" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="authorityEmail">Email:</label>
-                        <input type="email" id="authorityEmail" name="authorityEmail" required>
-                    </div>
-
-                    <!-- Officials Section -->
-                    <div class="section-label">
-                        <span>Official</span>
-                        <hr>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="officialName">Name:</label>
-                        <input type="text" id="officialName" name="officialName" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="officialPosition">Position:</label>
-                        <input type="text" id="officialPosition" name="officialPosition" required>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="officialEmail">Email:</label>
-                        <input type="email" id="officialEmail" name="officialEmail" required>
+                        <label for="endDateTime">End Date and Time:</label>
+                        <input type="datetime-local" id="endDateTime" name="endDateTime" required>
                     </div>
 
                     <button type="submit" class="body_button">Add Election</button>

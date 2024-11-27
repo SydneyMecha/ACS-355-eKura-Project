@@ -10,5 +10,14 @@ class Candidate extends Model
     /** @use HasFactory<\Database\Factories\CandidateFactory> */
     use HasFactory;
 
-    protected $table = 'candidate';
+    protected $fillable = [
+        'ballot_id',
+        'candidate_name',
+        'party',
+        'bio',
+        'status',
+        'photo'
+    ];
+
+    protected $table = 'candidates';
 }

@@ -14,12 +14,10 @@ return new class extends Migration
         Schema::create('elections', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->date('start date');
-            $table->time('start time');
-            $table->date('end date');
-            $table->time('end time');
-            $table->string('eligibility');
+            $table->text('description')->nullable();
+            $table->dateTime('start_datetime');
+            $table->dateTime('end_datetime');
+            $table->string('status')->default('upcoming');
             $table->timestamps();
         });
     }
