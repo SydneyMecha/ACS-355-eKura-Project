@@ -7,7 +7,7 @@
             </a>
 
             <div class="sb-sidenav-menu-heading">Elections</div>
-            <a class="nav-link" href="{{ url('/admin/election_management') }}">
+            <a class="nav-link" href="{{ url('/elections') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Election Management
             </a>

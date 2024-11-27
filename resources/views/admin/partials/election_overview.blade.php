@@ -11,39 +11,36 @@
         <hr>
 
         <ul>
-            <li>
-                <span class="toggle-btn">
-                    <a href="javascript:void(0);" onclick="viewElection('Election 1')">Election 1</a>
-                    <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
-                </span>
-                <ul style="display: none;">
+            @foreach($elections as $election)
+                @if($election->status == 'active')
+                    <!-- Assuming 'status' indicates active elections -->
                     <li>
                         <span class="toggle-btn">
-                            Ballot 1
-                        <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
+                            <a href="javascript:void(0);"
+                               onclick="viewElection('{{ $election->name }}')">{{ $election->name }}</a>
+                            <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
                         </span>
                         <ul style="display: none;">
-                            <li>Candidate 1</li>
-                            <li>Candidate 2</li>
-                            <li>Candidate 3</li>
+                            <!-- Placeholder for ballots and candidates -->
+                            @forelse($election->ballots as $ballot)
+                                <li>
+                                    <span class="toggle-btn">
+                                        {{ $ballot['ballot_name'] }} ({{ $ballot->status }})
+                                        <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
+                                    </span>
+                                    <ul style="display: none;">
+                                        @foreach($ballot->candidates as $candidate)
+                                            <li>{{ $candidate->candidate_name }} ({{ $candidate->party }})</li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @empty
+                                <li>No ballots available for this election.</li>
+                            @endforelse
                         </ul>
                     </li>
-                    <li>
-                        <span class="toggle-btn">Ballot 2</span>
-                        <ul style="display: none;">
-                            <li>Candidate 4</li>
-                            <li>Candidate 5</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span class="toggle-btn">Ballot 3</span>
-                        <ul style="display: none;">
-                            <li>Candidate 6</li>
-                            <li>Candidate 7</li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+                @endif
+            @endforeach
         </ul>
     </div>
 
@@ -53,39 +50,35 @@
         <hr>
 
         <ul>
-            <li>
-                <span class="toggle-btn">
-                    <a href="javascript:void(0);" onclick="viewElection('Election 1')">Election 1</a>
-                    <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
-                </span>
-                <ul style="display: none;">
+            @foreach($elections as $election)
+                @if($election->status == 'upcoming')
+                    <!-- Assuming 'status' indicates upcoming elections -->
                     <li>
                         <span class="toggle-btn">
-                            Ballot 1
-                        <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
+                            <a href="javascript:void(0);"
+                               onclick="viewElection(this.textContent)">{{ $election->name }}</a>
+                            <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
                         </span>
                         <ul style="display: none;">
-                            <li>Candidate 1</li>
-                            <li>Candidate 2</li>
-                            <li>Candidate 3</li>
+                            @forelse($election->ballots as $ballot)
+                                <li>
+                                    <span class="toggle-btn">
+                                        {{ $ballot['ballot_name'] }} ({{ $ballot->status }})
+                                        <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
+                                    </span>
+                                    <ul style="display: none;">
+                                        @foreach($ballot->candidates as $candidate)
+                                            <li>{{ $candidate->candidate_name }} ({{ $candidate->party }})</li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @empty
+                                <li>No ballots available for this election.</li>
+                            @endforelse
                         </ul>
                     </li>
-                    <li>
-                        <span class="toggle-btn">Ballot 2</span>
-                        <ul style="display: none;">
-                            <li>Candidate 4</li>
-                            <li>Candidate 5</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span class="toggle-btn">Ballot 3</span>
-                        <ul style="display: none;">
-                            <li>Candidate 6</li>
-                            <li>Candidate 7</li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+                @endif
+            @endforeach
         </ul>
     </div>
 
@@ -95,54 +88,42 @@
         <hr>
 
         <ul>
-            <li>
-                <span class="toggle-btn">
-                    <a href="javascript:void(0);" onclick="viewElection('Election 1')">Election 1</a>
-                    <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
-                </span>
-                <ul style="display: none;">
+            @foreach($elections as $election)
+                @if($election->status == 'completed')
+                    <!-- Assuming 'status' indicates completed elections -->
                     <li>
                         <span class="toggle-btn">
-                            Ballot 1
-                        <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
+                            <a href="javascript:void(0);"
+                               onclick="viewElection('{{ $election->name }}')">{{ $election->name }}</a>
+                            <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
                         </span>
                         <ul style="display: none;">
-                            <li>Candidate 1</li>
-                            <li>Candidate 2</li>
-                            <li>Candidate 3</li>
+                            @forelse($election->ballots as $ballot)
+                                <li>
+                                    <span class="toggle-btn">
+                                        {{ $ballot['ballot_name'] }} ({{ $ballot->status }})
+                                        <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
+                                    </span>
+                                    <ul style="display: none;">
+                                        @foreach($ballot->candidates as $candidate)
+                                            <li>{{ $candidate->candidate_name }} ({{ $candidate->party }})</li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @empty
+                                <li>No ballots available for this election.</li>
+                            @endforelse
                         </ul>
                     </li>
-                    <li>
-                        <span class="toggle-btn">Ballot 2</span>
-                        <ul style="display: none;">
-                            <li>Candidate 4</li>
-                            <li>Candidate 5</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span class="toggle-btn">Ballot 3</span>
-                        <ul style="display: none;">
-                            <li>Candidate 6</li>
-                            <li>Candidate 7</li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+                @endif
+            @endforeach
         </ul>
     </div>
 
 </section>
 
+
 <script>
-    // Function to view election details
-
-    // function viewElection(electionName) {
-    //     if (electionName === 'Election 1') {
-    //         alert(`Details for ${electionName}`); // Replace with actual logic for showing election details
-    //     }
-    // }
-
-    // Function to toggle dropdown
     function toggleDropdown(iconElement) {
         const nestedList = iconElement.parentElement.nextElementSibling;
         if (nestedList && nestedList.tagName === 'UL') {
@@ -161,5 +142,41 @@
             }
         });
     });
+
+    // Fetch the election data from the server and populate the electionData object
+    function fetchElectionData() {
+        fetch('/get-elections')  // This URL should return the election data in JSON format
+            .then(response => response.json())
+            .then(data => {
+                window.electionData = data;  // Store the fetched data in a global object
+            })
+            .catch(error => {
+                console.error('Error fetching election data:', error);
+            });
+    }
+
+    // Fetch data on page load
+    window.onload = function () {
+        fetchElectionData();
+    };
+
+    // Function to view election details
+    function viewElection(electionName) {
+        const election = window.electionData[electionName];
+        if (election) {
+            document.getElementById('viewName').textContent = election.name;
+            document.getElementById('viewDescription').textContent = election.description;
+            document.getElementById('viewType').textContent = election.type;
+            document.getElementById('viewStartDate').textContent = election.startDate;
+            document.getElementById('viewEndDate').textContent = election.endDate;
+            document.getElementById('viewStatus').textContent = election.status;
+            document.getElementById('viewCreatedAt').textContent = election.created_at;
+            document.getElementById('viewUpdatedAt').textContent = election.updated_at;
+
+            // Display the view election modal
+            document.getElementById('viewElectionModal').style.display = 'flex';
+            document.querySelector('.main-content').classList.add('background-blur');
+        }
+    }
 </script>
 

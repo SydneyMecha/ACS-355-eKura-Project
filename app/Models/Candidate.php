@@ -15,9 +15,14 @@ class Candidate extends Model
         'candidate_name',
         'party',
         'bio',
-        'status',
-        'photo'
+        'status'
     ];
 
     protected $table = 'candidates';
+
+    public function ballot()
+    {
+        return $this->belongsTo(Ballot::class);
+    }
+
 }

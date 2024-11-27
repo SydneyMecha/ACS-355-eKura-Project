@@ -14,9 +14,19 @@ class Election extends Model
         'name',
         'description',
         'start_datetime',
-        'end_datetime',
-        'status',
+        'end_datetime'
     ];
 
     protected $table = 'elections';
+
+    protected $casts = [
+        'start_datetime' => 'datetime',
+        'end_datetime' => 'datetime',
+    ];
+
+    public function ballots()
+    {
+        return $this->hasMany(Ballot::class);
+    }
+
 }

@@ -1,43 +1,9 @@
 <section>
     <div class="active_elections">
-        <div id="electionChoiceModal" class="modal-overlay" style="display: none;">
-            <div class="modal-content" style="height: fit-content;">
-                <span class="close-button" onclick="closeElectionChoiceForm()">
-                    <i class="fa-solid fa-circle-xmark"></i>
-                </span>
-                <form class="election-choice-form" style="display: flex; flex-direction: column; gap: 10px" onsubmit="return false;">
-                    <span>Choose the election you want to add a ballot to:</span>
-                    <select>
-                        <option value="election1">Election 1</option>
-                        <option value="election2">Election 2</option>
-                        <option value="election3">Election 3</option>
-                    </select>
-                    <button type="button" class="body_button" onclick="openBallotForm()">Continue</button>
-                </form>
-            </div>
-        </div>
-
-        <div id="ballotChoiceModal" class="modal-overlay" style="display: none;">
-            <div class="modal-content" style="height: fit-content;">
-                <span class="close-button" onclick="closeBallotChoiceForm()">
-                    <i class="fa-solid fa-circle-xmark"></i>
-                </span>
-                <form class="election-choice-form" style="display: flex; flex-direction: column; gap: 10px" onsubmit="return false;">
-                    <span> Choose the ballot you want to add a candidate to:</span>
-                    <select>
-                        <option value="ballot1">Ballot 1</option>
-                        <option value="ballot2">Ballot 2</option>
-                        <option value="ballot3">Ballot 3</option>
-                    </select>
-                    <button type="button" class="body_button" onclick="openCandidateForm()">Continue</button>
-                </form>
-            </div>
-        </div>
-
         <div id="electionModal" class="modal-overlay" style="display: none;">
             <div class="modal-content">
                 <span class="close-button" onclick="closeElectionForm()"><i class="fa-solid fa-circle-xmark"></i></span>
-                <form class="election-form" method="post" action="{{ route('election.store') }}">
+                <form class="election-form" method="post" action="{{ route('elections.store') }}">
                     @csrf
                     @method('post')
 
@@ -48,7 +14,7 @@
                     </div>
 
                     <div class="form-row">
-                        <label for="name">Name:</label>
+                        <label for="name">Election Name:</label>
                         <input type="text" id="name" name="name" required>
                     </div>
 
@@ -59,14 +25,13 @@
 
                     <div class="form-row">
                         <label for="startDateTime">Start Date and Time:</label>
-                        <input type="datetime-local" id="startDateTime" name="startDateTime" required>
+                        <input type="datetime-local" id="startDateTime" name="start_datetime" required>
                     </div>
 
                     <div class="form-row">
                         <label for="endDateTime">End Date and Time:</label>
-                        <input type="datetime-local" id="endDateTime" name="endDateTime" required>
+                        <input type="datetime-local" id="endDateTime" name="end_datetime" required>
                     </div>
-
                     <button type="submit" class="body_button">Add Election</button>
                 </form>
             </div>
@@ -77,37 +42,63 @@
         <span class="close-button" onclick="closeBallotForm()">
             <i class="fa-solid fa-circle-xmark"></i>
         </span>
-                <form class="ballot-form">
+                <form class="ballot-form" id="ballotForm" onsubmit="submitBallotForm(event)">
+                    <span>Choose the election you want to add a ballot to:</span>
+                    <select id="electionSelect" onchange="storeElectionChoice()" required>
+                        <option value="" disabled selected>Select election</option>
+                        @foreach($elections as $election)
+                            <option value="{{ $election->id }}" {{ $election->status == 'completed' ? 'disabled' : '' }}>
+                                {{ $election->name }} ({{ $election->status }})
+                            </option>
+                        @endforeach
+                    </select>
+
                     <div class="section-label">
                         <span>Ballot Details</span>
                         <hr>
                     </div>
+
+                    <!-- Hidden Election ID Field -->
+                    <input type="hidden" id="election_id" name="election_id">
+
                     <div class="form-row">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required placeholder="e.g., President, Governor, etc.">
+                        <label for="ballot_name">Name:</label>
+                        <input type="text" id="ballot_name" name="ballot_name" required placeholder="e.g., President, Governor, etc.">
                     </div>
+
                     <div class="form-row">
-                        <label for="description">Description:</label>
-                        <textarea id="description" name="description" required placeholder="Any necessary information about the ballot"></textarea>
-                    </div>
-                    <div class="form-row">
-                        <label for="type">Type:</label>
-                        <select id="type" name="type" required>
-                            <option value="single_choice">Single Choice</option>
-                            <option value="ranked_choice">Ranked Choice</option>
-                        </select>
+                        <label for="ballot_description">Description:</label>
+                        <textarea id="ballot_description" name="ballot_description" required placeholder="Any necessary information about the ballot"></textarea>
                     </div>
                     <button type="submit">Add Ballot</button>
                 </form>
             </div>
         </div>
 
-
         <div id="candidateModal" class="modal-overlay" style="display: none;">
             <div class="modal-content" style="height: fit-content;">
-                                <span class="close-button" onclick="closeCandidateForm()"><i
-                                        class="fa-solid fa-circle-xmark"></i></span>
-                <form class="candidate-form">
+                <span class="close-button" onclick="closeCandidateForm()">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </span>
+
+                <form action="{{ route('candidates.store') }}" method="POST">
+                    @csrf
+
+                    <span>Choose the ballot you want to add a ballot to:</span>
+                    <select id="ballotSelect" name="ballot_id" onchange="storeBallotChoice()" required>
+
+                        <option value="" disabled selected>Select ballot</option>
+
+                        @foreach($elections as $election)
+                            <option disabled>{{ $election->name }} (Election)</option>
+
+                            @foreach($election->ballots as $ballot)
+                                <option value="{{ $ballot->id }}" {{ $ballot->status == 'inactive' ? 'disabled' : '' }} style="padding: 10px">
+                                    ~~ {{ $ballot->ballot_name }} ({{ $ballot->status }})
+                                </option>
+                            @endforeach
+                        @endforeach
+                    </select>
 
                     <!-- Candidate Details Section -->
                     <div class="section-label">
@@ -115,9 +106,11 @@
                         <hr>
                     </div>
 
+                    <input type="hidden" id="ballot_id" name="ballot_id">
+
                     <div class="form-row">
-                        <label for="name">Full Name:</label>
-                        <input type="text" id="name" name="name" required>
+                        <label for="candidate_name">Full Name:</label>
+                        <input type="text" id="candidate_name" name="candidate_name" required placeholder="e.g., John/Jane Doe">
                     </div>
 
                     <div class="form-row">
@@ -126,24 +119,11 @@
                     </div>
 
                     <div class="form-row">
-                        <label for="manifesto">Manifesto:</label>
-                        <textarea id="manifesto" name="manifesto" required></textarea>
+                        <label for="bio">Bio:</label>
+                        <textarea id="bio" name="bio"></textarea>
                     </div>
 
-                    <div class="form-row">
-                        <label for="ballot">Ballot</label>
-                        <select id="ballot" name="ballot" required>
-                            <option value="single_choice">[Ballot 1]</option>
-                            <option value="ranked_choice">[Ballot 2]</option>
-                        </select>
-                    </div>
-
-                    <div class="form-row">
-                        <label for="candidate_photo">Candidate Photo:</label>
-                        <input type="file" name="image">
-                    </div>
-
-                    <button type="submit" class="body_button">Add Candidate</button>
+                    <button type="submit">Add Ballot</button>
                 </form>
             </div>
         </div>

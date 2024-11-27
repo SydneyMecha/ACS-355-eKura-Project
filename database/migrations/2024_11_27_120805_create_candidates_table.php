@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('candidate_name');
             $table->string('party')->nullable();
             $table->text('bio')->nullable();
-            $table->string('status')->default('active');
-            $table->string('photo')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
+            $table->index('ballot_id');
         });
     }
 

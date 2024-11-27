@@ -10,8 +10,8 @@
 
     <hr>
 
-    <div class="election_management" style="overflow-y: auto;">
-        <div class="election_view">
+    <div class="election_management" style="display: flex; flex-direction: column;">
+        <div class="election_view" style="overflow-y: auto;">
             <div class="elections">
                 @include('admin.partials.election_overview')
             </div>
@@ -29,15 +29,15 @@
             </div>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; flex-direction: row; justify-content: space-evenly">
             <button type="submit" class="body_button">
-                <a onclick="openElectionForm()">Add Election</a>
+                <a class="body_button" onclick="openElectionForm()">Add Election</a>
             </button>
             <button type="submit" class="body_button">
-                <a onclick="openElectionChoiceForm()">Add Ballot</a>
+                <a class="body_button" onclick="openBallotForm()">Add Ballot</a>
             </button>
             <button type="submit" class="body_button">
-                <a onclick="openBallotChoiceForm()">Add Candidate</a>
+                <a class="body_button" onclick="openCandidateForm()">Add Candidate</a>
             </button>
         </div>
     </div>

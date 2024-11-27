@@ -1,8 +1,10 @@
 <?php
 
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
 
 return new class extends Migration
 {
@@ -17,10 +19,13 @@ return new class extends Migration
             $table->foreign('election_id')->references('id')->on('elections')->onDelete('cascade');
             $table->string('ballot_name');
             $table->text('ballot_description');
-            $table->string('ballot_status')->default('active');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
+            $table->index('election_id'); // Index for better performance on queries related to election_id
         });
+
     }
+
 
     /**
      * Reverse the migrations.

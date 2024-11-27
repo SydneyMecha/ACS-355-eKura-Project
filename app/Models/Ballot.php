@@ -11,11 +11,18 @@ class Ballot extends Model
     use HasFactory;
 
     protected $fillable = [
-        'election_id',
-        'ballot_name',
-        'ballot_description',
-        'ballot_status',
+        'election_id', 'ballot_name', 'ballot_description', 'ballot_status'
     ];
 
-    protected $table = 'ballots';
+    // Relationship with Election
+    public function election()
+    {
+        return $this->belongsTo(Election::class);
+    }
+
+    // Relationship with Candidate (assuming candidates are linked to ballots)
+    public function candidates()
+    {
+        return $this->hasMany(Candidate::class);
+    }
 }

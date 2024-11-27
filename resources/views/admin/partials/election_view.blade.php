@@ -18,67 +18,24 @@
                     <span id="viewDescription"></span>
                 </div>
                 <div class="form-row">
-                    <label>Type:</label>
-                    <span id="viewType"></span>
-                </div>
-                <!-- Schedule Section -->
-                <div class="section-label">
-                    <span>Schedule</span>
-                    <hr>
-                </div>
-                <div class="form-row">
-                    <label>Start Date:</label>
+                    <label>Start Date and Time:</label>
                     <span id="viewStartDate"></span>
                 </div>
                 <div class="form-row">
-                    <label>End Date:</label>
+                    <label>End Date and Time:</label>
                     <span id="viewEndDate"></span>
                 </div>
                 <div class="form-row">
-                    <label>Time Zone:</label>
-                    <span id="viewTimeZone"></span>
-                </div>
-                <!-- Eligibility Section -->
-                <div class="section-label">
-                    <span>Eligibility</span>
-                    <hr>
+                    <label>Status:</label>
+                    <span id="viewStatus"></span>
                 </div>
                 <div class="form-row">
-                    <label>Jurisdiction:</label>
-                    <span id="viewJurisdiction"></span>
+                    <label>Created At:</label>
+                    <span id="viewCreatedAt"></span>
                 </div>
                 <div class="form-row">
-                    <label>Eligibility:</label>
-                    <span id="viewEligibility"></span>
-                </div>
-                <!-- Authorities & Officials Section -->
-                <div class="section-label">
-                    <span>Authorities & Officials</span>
-                    <hr>
-                </div>
-                <div class="form-row">
-                    <label>Authority Name:</label>
-                    <span id="viewAuthorityName"></span>
-                </div>
-                <div class="form-row">
-                    <label>Authority Title:</label>
-                    <span id="viewAuthorityTitle"></span>
-                </div>
-                <div class="form-row">
-                    <label>Authority Email:</label>
-                    <span id="viewAuthorityEmail"></span>
-                </div>
-                <div class="form-row">
-                    <label>Official Name:</label>
-                    <span id="viewOfficialName"></span>
-                </div>
-                <div class="form-row">
-                    <label>Official Position:</label>
-                    <span id="viewOfficialPosition"></span>
-                </div>
-                <div class="form-row">
-                    <label>Official Email:</label>
-                    <span id="viewOfficialEmail"></span>
+                    <label>Updated At:</label>
+                    <span id="viewUpdatedAt"></span>
                 </div>
                 <button class="body_button"><i class="fa-solid fa-trash"></i> Delete Election</button>
             </div>

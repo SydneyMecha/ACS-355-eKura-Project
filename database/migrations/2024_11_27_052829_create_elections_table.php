@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('elections', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable();
-            $table->dateTime('start_datetime');
-            $table->dateTime('end_datetime');
-            $table->string('status')->default('upcoming');
+            $table->text('description');
+            $table->datetime('start_datetime');
+            $table->datetime('end_datetime');
+            $table->enum('status', ['upcoming', 'active', 'completed'])->default('upcoming');
             $table->timestamps();
         });
     }
