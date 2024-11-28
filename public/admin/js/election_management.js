@@ -1,3 +1,6 @@
+
+// ELECTIONS
+
 function openElectionForm() {
     document.getElementById('electionModal').style.display = 'flex';
     document.querySelector('.main-content').classList.add('background-blur');
@@ -8,39 +11,15 @@ function closeElectionForm() {
     document.querySelector('.main-content').classList.remove('background-blur');
 }
 
-// Create a Ballot
-
-function openBallotForm() {
-    document.getElementById('ballotModal').style.display = 'flex';
-    document.querySelector('.main-content').classList.add('background-blur');
-}
-
-function closeBallotForm() {
-    document.getElementById('ballotModal').style.display = 'none';
-    document.querySelector('.main-content').classList.remove('background-blur');
-}
-
-// Create a Candidate
-
-function openCandidateForm() {
-    document.getElementById('candidateModal').style.display = 'flex';
-    document.querySelector('.main-content').classList.add('background-blur');
-}
-
-function closeCandidateForm() {
-    document.getElementById('candidateModal').style.display = 'none';
-    document.querySelector('.main-content').classList.remove('background-blur');
-}
-
 function viewElectionDetails(id, name, description, startDate, endDate, createdAt, updatedAt) {
     document.getElementById('viewElectionModal').style.display = 'flex';
     // Set election details in modal
-    document.getElementById('viewName').textContent = name;
-    document.getElementById('viewDescription').textContent = description;
-    document.getElementById('viewStartDate').textContent = startDate;
-    document.getElementById('viewEndDate').textContent = endDate;
-    document.getElementById('viewCreatedAt').textContent = createdAt;
-    document.getElementById('viewUpdatedAt').textContent = updatedAt;
+    document.getElementById('viewName').innerText = name || 'No Name Provided';
+    document.getElementById('viewDescription').innerText = description || 'No Description Provided';
+    document.getElementById('viewStartDate').innerText = startDate || 'N/A';
+    document.getElementById('viewEndDate').innerText = endDate || 'N/A';
+    document.getElementById('viewCreatedAt').innerText = createdAt || 'N/A';
+    document.getElementById('viewUpdatedAt').innerText = updatedAt || 'N/A';
 
     // Start countdown
     updateCountdown(startDate);
@@ -127,6 +106,19 @@ function storeElectionChoice() {
     document.getElementById('election_id').value = electionId;
 }
 
+
+// BALLOTS
+
+function openBallotForm() {
+    document.getElementById('ballotModal').style.display = 'flex';
+    document.querySelector('.main-content').classList.add('background-blur');
+}
+
+function closeBallotForm() {
+    document.getElementById('ballotModal').style.display = 'none';
+    document.querySelector('.main-content').classList.remove('background-blur');
+}
+
 function storeBallotChoice() {
     var selectedBallotId = document.getElementById("ballotSelect").value;
     document.getElementById("ballot_id").value = selectedBallotId;
@@ -156,7 +148,7 @@ function submitBallotForm(event) {
             try {
                 const jsonData = JSON.parse(data); // Attempt to parse JSON
                 if (jsonData.success) {
-                    alert(jsonData.message);
+                    // alert(jsonData.message);
                     location.reload();
                 } else {
                     alert('Error: ' + jsonData.message);
@@ -172,27 +164,103 @@ function submitBallotForm(event) {
         });
 }
 
-function submitCandidateForm(event) {
-    event.preventDefault(); // Prevent the form from submitting normally
+function viewBallotDetails(id, ballot_name, ballot_description, status, created_at, updated_at) {
+    document.getElementById('viewBallotModal').style.display = 'flex';
 
-    let formData = new FormData(document.getElementById('candidateForm'));
+    // Fill modal fields with data
+    document.getElementById('viewBallotName').innerText = name || 'No Name Provided';
+    document.getElementById('viewBallotDescription').innerText = description || 'No Description Provided';
+    document.getElementById('viewStatus').innerText = status || 'N/A';
+    document.getElementById('viewBallotCreatedAt').innerText = createdAt || 'N/A';
+    document.getElementById('viewBallotUpdatedAt').innerText = updatedAt || 'N/A';
 
-    fetch('/candidates', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.id) {
-                alert('Candidate added successfully!');
-                closeCandidateForm();
-                location.reload(); // Optional: reload to show the new candidate
-            } else {
-                alert('Error adding candidate.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('There was an error adding the candidate.');
-        });
+    document.getElementById('editBallotName').value = ballot_name;
+    document.getElementById('editBallotDescription').value = ballot_description;
+    document.getElementById('editBallotStatus').value = status;
+
+    document.getElementById('editBallotForm').action = '/ballots/' + id;
+}
+function closeViewBallotForm() {
+    document.getElementById('viewBallotModal').style.display = 'none';
+    document.querySelector('.main-content').classList.remove('background-blur');
+}
+
+function editBallotForm() {
+    const nameInput = document.getElementById('editName');
+    const descriptionInput = document.getElementById('editDescription');
+    const statusInput = document.getElementById('editStatus');
+
+    nameInput.value = document.getElementById('viewName').innerText;
+    descriptionInput.value = document.getElementById('viewDescription').innerText;
+    statusInput.value = document.getElementById('viewStatus').innerText;
+
+    document.getElementById('editBallotModal').style.display = 'flex';
+}
+
+function closeEditBallotForm() {
+    document.getElementById('editBallotModal').style.display = 'none';
+    document.querySelector('.main-content').classList.remove('background-blur');
+}
+
+function confirmBallotDelete() {
+    document.getElementById('deleteBallotConfirmationModal').style.display = 'flex';
+}
+
+function closeBallotDeleteConfirmation() {
+    document.getElementById('deleteBallotConfirmationModal').style.display = 'none';
+}
+
+
+// CANDIDATES
+
+function openCandidateForm() {
+    document.getElementById('candidateModal').style.display = 'flex';
+    document.querySelector('.main-content').classList.add('background-blur');
+}
+
+function closeCandidateForm() {
+    document.getElementById('candidateModal').style.display = 'none';
+    document.querySelector('.main-content').classList.remove('background-blur');
+}
+
+function viewCandidateDetails(id, candidate_name, party, bio, status, created_at, updated_at) {
+    document.getElementById('viewCandidateModal').style.display = 'flex';
+
+    document.getElementById('viewCandidateName').textContent = candidate_name;
+    document.getElementById('viewParty').textContent = party;
+    document.getElementById('viewBio').textContent = bio;
+    document.getElementById('viewCandidateStatus').textContent = status;
+    document.getElementById('viewCandidateCreatedAt').textContent = created_at;
+    document.getElementById('viewCandidateUpdatedAt').textContent = updated_at;
+
+    document.getElementById('editCandidateForm').action = '/candidates/' + id;
+    document.getElementById('deleteCandidateForm').action = '/candidates/' + id;
+}
+
+function closeViewCandidateForm() {
+    document.getElementById('viewCandidateModal').style.display = 'none';
+    document.querySelector('.main-content').classList.remove('background-blur');
+}
+
+function editCandidateForm(candidateId) {
+    document.getElementById('editCandidateModal').style.display = 'flex';
+
+    const nameInput = document.getElementById('editCandidateName');
+    const partyInput = document.getElementById('editParty');
+    const bioInput = document.getElementById('editBio');
+
+    nameInput.value = document.getElementById('viewCandidateName').innerText;
+    partyInput.value = document.getElementById('viewParty').innerText;
+    bioInput.value = document.getElementById('viewBio').innerText;
+}
+
+function closeEditCandidateForm() {
+    document.getElementById('editCandidateModal').style.display = 'none';
+}
+function confirmCandidateDelete() {
+    document.getElementById('deleteCandidateConfirmationModal').style.display = 'flex';
+}
+
+function closeCandidateDeleteConfirmation() {
+    document.getElementById('deleteConfirmationModal').style.display = 'none';
 }

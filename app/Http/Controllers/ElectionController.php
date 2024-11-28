@@ -71,8 +71,8 @@ class ElectionController extends Controller
 
     public function show($id)
     {
-        $election = Election::findOrFail($id); // Find the election by ID
-        return view('elections.show', compact('election')); // Return the election details to the view
+        $election = Election::with('ballots.candidates')->findOrFail($id);
+        return view('elections.show', compact('election'));
     }
 
     public function destroy(Request $request, $id): \Illuminate\Http\RedirectResponse

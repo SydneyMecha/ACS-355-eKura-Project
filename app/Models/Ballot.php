@@ -11,7 +11,7 @@ class Ballot extends Model
     use HasFactory;
 
     protected $fillable = [
-        'election_id', 'ballot_name', 'ballot_description', 'ballot_status'
+        'election_id', 'ballot_name', 'ballot_description', 'status'
     ];
 
     // Relationship with Election

@@ -3,36 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Candidate;
-use App\Models\Ballot;
 use Illuminate\Http\Request;
 
 class CandidateController extends Controller
 {
-    // Display a listing of the candidates
-    public function index()
-    {
-        // Fetch all candidates with their associated ballots
-        $candidates = Candidate::with('ballot')->get();
-        return response()->json($candidates);
-    }
-
-    // Store a newly created candidate in storage
     public function store(Request $request)
     {
-        // Validate the request data
-        $validated = $request->validate([
+        $request->validate([
             'ballot_id' => 'required|exists:ballots,id', // Ensure ballot_id exists in the ballots table
             'candidate_name' => 'required|string|max:255',
             'party' => 'nullable|string|max:255',
             'bio' => 'nullable|string',
         ]);
 
-        // Create the candidate
-        $candidate = Candidate::create([
-            'ballot_id' => $validated['ballot_id'],
-            'candidate_name' => $validated['candidate_name'],
-            'party' => $validated['party'],
-            'bio' => $validated['bio'],
+        Candidate::create([
+            'ballot_id' => $request->ballot_id,
+            'candidate_name' => $request->candidate_name,
+            'party' => $request->party,
+            'bio' => $request->bio,
             'status' => 'active', // Default status
         ]);
 
@@ -40,53 +28,40 @@ class CandidateController extends Controller
     }
 
     // Display the specified candidate
-    public function show($id)
+    public function show($id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
-        $candidate = Candidate::find($id);
-
-        if (!$candidate) {
-            return response()->json(['message' => 'Candidate not found'], 404);
-        }
-
-        return response()->json($candidate);
+        $candidate = Candidate::findOrFail($id);
+        return view('candidates.show', compact('candidate'));
     }
 
-    // Update the specified candidate in storage
-    public function update(Request $request, $id)
+    public function edit($id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
-        $candidate = Candidate::find($id);
+        $candidate = Candidate::findOrFail($id); // Fetch candidate by ID
+        return view('candidates.edit', compact('candidate'));
+    }
 
-        if (!$candidate) {
-            return response()->json(['message' => 'Candidate not found'], 404);
-        }
+    public function update(Request $request, $id): \Illuminate\Http\RedirectResponse
+    {
+        $candidate = Candidate::findOrFail($id);
 
-        // Validate the request data
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'ballot_id' => 'required|exists:ballots,id',
             'candidate_name' => 'required|string|max:255',
-            'party' => 'nullable|string|max:255',
+            'party' => 'required|string|max:255',
             'bio' => 'nullable|string',
             'status' => 'required|in:active,inactive',
         ]);
 
-        // Update the candidate
-        $candidate->update($validated);
+        $candidate->update($validatedData);
 
-        return response()->json($candidate);
+        return redirect()->route('elections.index')->with('success', 'Candidate updated successfully!');
     }
 
-    // Remove the specified candidate from storage
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\RedirectResponse
     {
-        $candidate = Candidate::find($id);
-
-        if (!$candidate) {
-            return response()->json(['message' => 'Candidate not found'], 404);
-        }
-
-        // Delete the candidate
+        $candidate = Candidate::findOrFail($id);
         $candidate->delete();
 
-        return response()->json(['message' => 'Candidate deleted successfully']);
+        return redirect()->back()->with('success', 'Candidate deleted successfully!');
     }
 }

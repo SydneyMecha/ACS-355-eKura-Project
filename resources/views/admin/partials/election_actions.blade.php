@@ -128,7 +128,7 @@
                         <textarea id="bio" name="bio"></textarea>
                     </div>
 
-                    <button type="submit">Add Ballot</button>
+                    <button type="submit">Add Candidate</button>
                 </form>
             </div>
         </div>
@@ -193,6 +193,131 @@
                 @method('DELETE')
                 <div class="form-row" style="display: flex; justify-content: space-evenly">
                     <button type="button" onclick="closeDeleteConfirmation()" class="body_button">Cancel</button>
+                    <button type="submit" class="body_button">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="editBallotModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeEditBallotForm()"><i class="fa-solid fa-circle-xmark"></i></span>
+
+            <div class="section-label" style="font-size: 24px;">
+                <span style="font-size: 24px">Ballot Details</span>
+                <hr>
+            </div>
+
+            <form id="editBallotForm" method="POST" action="{{ route('ballots.update', $ballot->id) }}">
+                @csrf
+                @method('PUT')
+
+                <div class="form-row">
+                    <label for="ballot_name"><strong>Name:</strong></label>
+                    <input type="text" id="editBallotName" name="ballot_name" value="{{ $ballot->ballot_name }}">
+                </div>
+
+                <div class="form-row">
+                    <label for="ballot_description"><strong>Description:</strong></label>
+                    <textarea id="editBallotDescription" name="ballot_description">{{ $ballot->ballot_description }}</textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="status"><strong>Status:</strong></label>
+                    <select name="status" id="editBallotStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+
+                <div class="form-row" style="display: flex; justify-content: space-evenly">
+                    <button type="button" onclick="closeEditBallotForm()" class="body_button">Cancel</button>
+                    <button type="submit" class="body_button">Save</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div id="deleteBallotConfirmationModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeBallotDeleteConfirmation()"><i class="fa-solid fa-circle-xmark"></i></span>
+
+            <div class="section-label">
+                <span>Are you sure you want to delete this ballot?</span>
+                <hr>
+            </div>
+
+            <form id="deleteBallotForm" method="POST" action="{{ route('ballots.destroy', $ballot->id) }}">
+                @csrf
+                @method('DELETE')
+                <div class="form-row" style="display: flex; justify-content: space-evenly">
+                    <button type="button" onclick="closeBallotDeleteConfirmation()" class="body_button">Cancel</button>
+                    <button type="submit" class="body_button">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="editCandidateModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeEditCandidateForm()"><i class="fa-solid fa-circle-xmark"></i></span>
+
+            <div class="section-label" style="font-size: 24px;">
+                <span style="font-size: 24px">Candidate Details</span>
+                <hr>
+            </div>
+
+            <form id="editCandidateForm" method="POST">
+                @csrf
+                @method('PUT')
+
+                <input type="hidden" id="editCandidateId" name="candidate_id">
+
+                <div class="form-row">
+                    <label for="candidate_name"><strong>Name:</strong></label>
+                    <input type="text" id="editCandidateName" name="candidate_name" value="">
+                </div>
+
+                <div class="form-row">
+                    <label for="party"><strong>Party:</strong></label>
+                    <input type="text" id="editParty" name="party" value="">
+                </div>
+
+                <div class="form-row">
+                    <label for="bio"><strong>Bio:</strong></label>
+                    <textarea id="editBio" name="bio"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="status"><strong>Status:</strong></label>
+                    <select name="status" id="editStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="body_button">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="deleteCandidateConfirmationModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+        <span class="close-button" onclick="closeCandidateDeleteConfirmation()">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </span>
+
+            <div class="section-label">
+                <span>Are you sure you want to delete this candidate?</span>
+                <hr>
+            </div>
+
+            <form id="deleteCandidateForm" method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="form-row" style="display: flex; justify-content: space-evenly">
+                    <button type="button" onclick="closeCandidateDeleteConfirmation()" class="body_button">Cancel</button>
                     <button type="submit" class="body_button">Delete</button>
                 </div>
             </form>

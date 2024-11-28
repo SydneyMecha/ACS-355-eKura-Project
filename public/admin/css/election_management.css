@@ -90,6 +90,7 @@ button:hover {
     position: relative;
     overflow-y: auto;
     scrollbar-width: thin;
+    max-height: 80%;
 }
 
 /* Close button */

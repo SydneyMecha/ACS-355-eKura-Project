@@ -21,11 +21,11 @@ Route::delete('elections/{election}', [ElectionController::class, 'destroy'])->n
 
 // Ballot Routes - These can be handled by the ElectionController, so no need to nest BallotController.
 Route::post('/ballots', [BallotController::class, 'storeBallot'])->name('ballots.store');
-Route::post('ballots/{ballot}', [BallotController::class, 'update'])->name('ballots.update');
+Route::put('ballots/{ballot}', [BallotController::class, 'update'])->name('ballots.update');
 Route::delete('ballots/{ballot}', [BallotController::class, 'destroy'])->name('ballots.destroy');
 
 Route::post('/candidates', [CandidateController::class, 'store'])->name('candidates.store');
-Route::post('candidates/{candidate}', [CandidateController::class, 'update'])->name('candidates.update');
+Route::put('candidates/{candidate}', [CandidateController::class, 'update'])->name('candidates.update');
 Route::delete('candidates/{candidate}', [CandidateController::class, 'destroy'])->name('candidates.destroy');
 
 Route::get('/admin/election_monitoring', function () {
@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/api/elections', [ElectionController::class, 'getElections'])->name('api.elections');
+//Route::get('/api/elections', [ElectionController::class, 'getElections'])->name('api.elections');
 
 
 require __DIR__.'/auth.php';

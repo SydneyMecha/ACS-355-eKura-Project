@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Ballot;
+use App\Models\Candidate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CandidateFactory extends Factory
 {
+    protected $model = Candidate::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +21,11 @@ class CandidateFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'ballot_id' => Ballot::factory(), // Automatically creates an associated Ballot
+            'candidate_name' => $this->faker->name(),
+            'party' => $this->faker->company(),
+            'bio' => $this->faker->paragraph(),
+            'status' => $this->faker->randomElement(['active', 'inactive']),
         ];
     }
 }
