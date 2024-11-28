@@ -84,13 +84,12 @@ button:hover {
 .modal-content {
     background-color: #dedede;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 20px;
     width: 400px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     position: relative;
     overflow-y: auto;
     scrollbar-width: thin;
-    height: 80%;
 }
 
 /* Close button */
@@ -131,6 +130,7 @@ button:hover {
 
 .form-row {
     display: flex;
+    gap: 20px;
     align-items: center;
     margin-bottom: 15px;
 }

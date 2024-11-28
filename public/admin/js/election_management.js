@@ -32,6 +32,58 @@ function closeCandidateForm() {
     document.querySelector('.main-content').classList.remove('background-blur');
 }
 
+function viewElectionDetails(id, name, description, startDate, endDate, createdAt, updatedAt) {
+    document.getElementById('viewElectionModal').style.display = 'flex';
+    // Set election details in modal
+    document.getElementById('viewName').textContent = name;
+    document.getElementById('viewDescription').textContent = description;
+    document.getElementById('viewStartDate').textContent = startDate;
+    document.getElementById('viewEndDate').textContent = endDate;
+    document.getElementById('viewCreatedAt').textContent = createdAt;
+    document.getElementById('viewUpdatedAt').textContent = updatedAt;
+
+    // Start countdown
+    updateCountdown(startDate);
+}
+
+function closeViewElectionForm() {
+    // Close the modal
+    document.getElementById('viewElectionModal').style.display = 'none';
+    document.querySelector('.main-content').classList.remove('background-blur');
+}
+
+function editElectionForm() {
+
+    // Assuming the form has inputs with IDs that correspond to the election's details
+    const nameInput = document.getElementById('editName');
+    const descriptionInput = document.getElementById('editDescription');
+    const startDateInput = document.getElementById('editStartDate');
+    const endDateInput = document.getElementById('editEndDate');
+
+    // You can pre-fill the form fields with the values
+    nameInput.value = document.getElementById('viewName').innerText;
+    descriptionInput.value = document.getElementById('viewDescription').innerText;
+    startDateInput.value = document.getElementById('viewStartDate').innerText;
+    endDateInput.value = document.getElementById('viewEndDate').innerText;
+
+    // Open the modal to edit the election
+    document.getElementById('editElectionModal').style.display = 'flex';
+}
+
+function closeEditElectionForm() {
+    // Close the modal
+    document.getElementById('editElectionModal').style.display = 'none';
+    document.querySelector('.main-content').classList.remove('background-blur');
+}
+
+function confirmDelete() {
+    document.getElementById('deleteConfirmationModal').style.display = 'flex';
+}
+
+function closeDeleteConfirmation() {
+    document.getElementById('deleteConfirmationModal').style.display = 'none';
+}
+
 let electionData = {};
 
 function fetchElectionData() {
@@ -49,27 +101,24 @@ window.onload = function () {
     fetchElectionData();
 };
 
-function viewElection(electionName) {
-    const election = window.electionData[electionName];
-    if (election) {
-        document.getElementById('viewName').textContent = election.name;
-        document.getElementById('viewDescription').textContent = election.description;
-        document.getElementById('viewType').textContent = election.type;
-        document.getElementById('viewStartDate').textContent = election.startDate;
-        document.getElementById('viewEndDate').textContent = election.endDate;
-        document.getElementById('viewStatus').textContent = election.status;
-        document.getElementById('viewCreatedAt').textContent = election.created_at;
-        document.getElementById('viewUpdatedAt').textContent = election.updated_at;
+function updateCountdown(endDate) {
+    var endDateTime = new Date(endDate).getTime();
 
-        // Display the view election modal
-        document.getElementById('viewElectionModal').style.display = 'flex';
-        document.querySelector('.main-content').classList.add('background-blur');
-    }
-}
+    var countdownInterval = setInterval(function () {
+        var now = new Date().getTime();
+        var timeLeft = endDateTime - now;
 
-function closeViewElectionForm() {
-    document.getElementById('viewElectionModal').style.display = 'none';
-    document.querySelector('.main-content').classList.remove('background-blur');
+        if (timeLeft <= 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('countdown').textContent = "Election started!";
+        } else {
+            var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').textContent = hours + "h " + minutes + "m " + seconds + "s";
+        }
+    }, 1000);
 }
 
 function storeElectionChoice() {

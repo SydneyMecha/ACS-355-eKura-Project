@@ -14,7 +14,8 @@ class Election extends Model
         'name',
         'description',
         'start_datetime',
-        'end_datetime'
+        'end_datetime',
+        'status'
     ];
 
     protected $table = 'elections';

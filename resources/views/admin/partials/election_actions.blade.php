@@ -47,7 +47,8 @@
                     <select id="electionSelect" onchange="storeElectionChoice()" required>
                         <option value="" disabled selected>Select election</option>
                         @foreach($elections as $election)
-                            <option value="{{ $election->id }}" {{ $election->status == 'completed' ? 'disabled' : '' }}>
+                            <option
+                                value="{{ $election->id }}" {{ $election->status == 'completed' ? 'disabled' : '' }}>
                                 {{ $election->name }} ({{ $election->status }})
                             </option>
                         @endforeach
@@ -63,12 +64,14 @@
 
                     <div class="form-row">
                         <label for="ballot_name">Name:</label>
-                        <input type="text" id="ballot_name" name="ballot_name" required placeholder="e.g., President, Governor, etc.">
+                        <input type="text" id="ballot_name" name="ballot_name" required
+                               placeholder="e.g., President, Governor, etc.">
                     </div>
 
                     <div class="form-row">
                         <label for="ballot_description">Description:</label>
-                        <textarea id="ballot_description" name="ballot_description" required placeholder="Any necessary information about the ballot"></textarea>
+                        <textarea id="ballot_description" name="ballot_description" required
+                                  placeholder="Any necessary information about the ballot"></textarea>
                     </div>
                     <button type="submit">Add Ballot</button>
                 </form>
@@ -93,7 +96,8 @@
                             <option disabled>{{ $election->name }} (Election)</option>
 
                             @foreach($election->ballots as $ballot)
-                                <option value="{{ $ballot->id }}" {{ $ballot->status == 'inactive' ? 'disabled' : '' }} style="padding: 10px">
+                                <option value="{{ $ballot->id }}"
+                                        {{ $ballot->status == 'inactive' ? 'disabled' : '' }} style="padding: 10px">
                                     ~~ {{ $ballot->ballot_name }} ({{ $ballot->status }})
                                 </option>
                             @endforeach
@@ -110,7 +114,8 @@
 
                     <div class="form-row">
                         <label for="candidate_name">Full Name:</label>
-                        <input type="text" id="candidate_name" name="candidate_name" required placeholder="e.g., John/Jane Doe">
+                        <input type="text" id="candidate_name" name="candidate_name" required
+                               placeholder="e.g., John/Jane Doe">
                     </div>
 
                     <div class="form-row">
@@ -126,6 +131,71 @@
                     <button type="submit">Add Ballot</button>
                 </form>
             </div>
+        </div>
+    </div>
+
+    <div id="editElectionModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeEditElectionForm()"><i class="fa-solid fa-circle-xmark"></i></span>
+
+            <div class="section-label" style="font-size: 24px;">
+                <span style="font-size: 24px">Election Details</span>
+                <hr>
+            </div>
+
+            <form id="editElectionForm" method="POST" action="{{ route('elections.update', $election->id) }}">
+                @csrf
+                @method('PUT')
+                <div class="form-row">
+                    <label for="name"><strong>Name:</strong></label>
+                    <input type="text" id="editName" name="name"  value="{{ $election->name }}">
+                </div>
+
+                <div class="form-row">
+                    <label for="description"><strong>Description:</strong></label>
+                    <textarea id="editDescription" name="description">{{ $election->description }}</textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="editStartDate"><strong>Start Date and Time:</strong></label>
+                    <input type="datetime-local" id="editStartDate" name="start_datetime" value="{{ $election->start_datetime->format('Y-m-d\TH:i') }}">
+                </div>
+
+                <div class="form-row">
+                    <label for="editEndDate"><strong>End Date and Time:</strong></label>
+                    <input type="datetime-local" id="editEndDate" name="end_datetime"  value="{{ $election->end_datetime->format('Y-m-d\TH:i') }}">
+                </div>
+
+                <div class="form-row">
+                    <label for="editStatus"><strong>Status:</strong></label>
+                    <input type="text" id="editStatus" name="status" readonly value="{{ $election->status }}">
+                </div>
+
+                <div class="form-row" style="display: flex; justify-content: space-evenly">
+                    <button type="button" onclick="closeEditElectionForm()" class="body_button">Cancel</button>
+                    <button type="submit" class="body_button">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="deleteConfirmationModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeDeleteConfirmation()"><i class="fa-solid fa-circle-xmark"></i></span>
+
+            <div class="section-label">
+                <span>Are you sure you want to delete this election?</span>
+                <hr>
+            </div>
+
+            <form id="deleteElectionForm" method="POST" action="{{ route('elections.destroy', $election->id) }}" onsubmit="">
+                @csrf
+                @method('DELETE')
+                <div class="form-row" style="display: flex; justify-content: space-evenly">
+                    <button type="button" onclick="closeDeleteConfirmation()" class="body_button">Cancel</button>
+                    <button type="submit" class="body_button">Delete</button>
+                </div>
+            </form>
         </div>
     </div>
 

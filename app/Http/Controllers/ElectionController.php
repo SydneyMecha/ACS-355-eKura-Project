@@ -25,7 +25,7 @@ class ElectionController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'start_datetime' => 'required|date',
+            'start_datetime' => 'required|date|after_or_equal:now',
             'end_datetime' => 'required|date|after:start_datetime',
         ]);
 
@@ -41,30 +41,45 @@ class ElectionController extends Controller
         return redirect()->route('elections.index')->with('success', 'Election created successfully!');
     }
 
-    public function edit(Election $election): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
+    public function edit($id)
     {
-        return view('elections.edit', compact('election'));
+        $election = Election::findOrFail($id); // Find the election by ID
+        $electionId = $election->id;
+        return view('elections.edit', compact('election', 'electionId'));
     }
 
-    public function update(Request $request, Election $election): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
+//        dd($request->all());
+        // Validate the input
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
             'start_datetime' => 'required|date',
-            'end_datetime' => 'required|date|after:start_datetime',
-            'status' => 'required|in:upcoming,active,completed',
+            'end_datetime' => 'required|date|after_or_equal:start_datetime',
         ]);
 
-        $election->update($request->all());
+        // Find the election
+        $election = Election::findOrFail($id);
 
-        return redirect()->route('admin.election_management');
+        // Update the election with validated data
+        $election->update($validatedData);
+
+        // Redirect or respond with success
+        return redirect()->route('elections.index')->with('success', 'Election updated successfully!');
     }
 
-    public function destroy(Election $election): \Illuminate\Http\RedirectResponse
+    public function show($id)
     {
+        $election = Election::findOrFail($id); // Find the election by ID
+        return view('elections.show', compact('election')); // Return the election details to the view
+    }
+
+    public function destroy(Request $request, $id): \Illuminate\Http\RedirectResponse
+    {
+        $election = Election::findOrFail($id);
         $election->delete();
-        return redirect()->route('admin.election_management');
+        return redirect()->route('elections.index')->with('success', 'Election deleted successfully!');
     }
 
     public function getElections()

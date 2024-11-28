@@ -16,8 +16,10 @@
                     <!-- Assuming 'status' indicates active elections -->
                     <li>
                         <span class="toggle-btn">
-                            <a href="javascript:void(0);"
-                               onclick="viewElection('{{ $election->name }}')">{{ $election->name }}</a>
+                            <a onclick="viewElectionDetails('{{ $election->id }}', '{{ $election->name }}', '{{ $election->description }}', '{{ $election->start_datetime }}', '{{ $election->end_datetime }}', '{{ $election->created_at }}', '{{ $election->updated_at }}')">
+                                {{ $election->name }}
+                            </a>
+
                             <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
                         </span>
                         <ul style="display: none;">
@@ -55,8 +57,9 @@
                     <!-- Assuming 'status' indicates upcoming elections -->
                     <li>
                         <span class="toggle-btn">
-                            <a href="javascript:void(0);"
-                               onclick="viewElection(this.textContent)">{{ $election->name }}</a>
+                            <a onclick="viewElectionDetails('{{ $election->id }}', '{{ $election->name }}', '{{ $election->description }}', '{{ $election->start_datetime }}', '{{ $election->end_datetime }}', '{{ $election->created_at }}', '{{ $election->updated_at }}')">
+                                {{ $election->name }}
+                            </a>
                             <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
                         </span>
                         <ul style="display: none;">
@@ -142,41 +145,5 @@
             }
         });
     });
-
-    // Fetch the election data from the server and populate the electionData object
-    function fetchElectionData() {
-        fetch('/get-elections')  // This URL should return the election data in JSON format
-            .then(response => response.json())
-            .then(data => {
-                window.electionData = data;  // Store the fetched data in a global object
-            })
-            .catch(error => {
-                console.error('Error fetching election data:', error);
-            });
-    }
-
-    // Fetch data on page load
-    window.onload = function () {
-        fetchElectionData();
-    };
-
-    // Function to view election details
-    function viewElection(electionName) {
-        const election = window.electionData[electionName];
-        if (election) {
-            document.getElementById('viewName').textContent = election.name;
-            document.getElementById('viewDescription').textContent = election.description;
-            document.getElementById('viewType').textContent = election.type;
-            document.getElementById('viewStartDate').textContent = election.startDate;
-            document.getElementById('viewEndDate').textContent = election.endDate;
-            document.getElementById('viewStatus').textContent = election.status;
-            document.getElementById('viewCreatedAt').textContent = election.created_at;
-            document.getElementById('viewUpdatedAt').textContent = election.updated_at;
-
-            // Display the view election modal
-            document.getElementById('viewElectionModal').style.display = 'flex';
-            document.querySelector('.main-content').classList.add('background-blur');
-        }
-    }
 </script>
 

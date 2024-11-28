@@ -16,14 +16,16 @@ Route::get('/admin/dashboard', function () {
 
 // Election Routes
 Route::resource('elections', ElectionController::class);
+Route::put('elections/{election}', [ElectionController::class, 'update'])->name('elections.update');
+Route::delete('elections/{election}', [ElectionController::class, 'destroy'])->name('elections.destroy');
 
 // Ballot Routes - These can be handled by the ElectionController, so no need to nest BallotController.
 Route::post('/ballots', [BallotController::class, 'storeBallot'])->name('ballots.store');
-Route::put('ballots/{ballot}', [BallotController::class, 'update'])->name('ballots.update');
+Route::post('ballots/{ballot}', [BallotController::class, 'update'])->name('ballots.update');
 Route::delete('ballots/{ballot}', [BallotController::class, 'destroy'])->name('ballots.destroy');
 
 Route::post('/candidates', [CandidateController::class, 'store'])->name('candidates.store');
-Route::put('candidates/{candidate}', [CandidateController::class, 'update'])->name('candidates.update');
+Route::post('candidates/{candidate}', [CandidateController::class, 'update'])->name('candidates.update');
 Route::delete('candidates/{candidate}', [CandidateController::class, 'destroy'])->name('candidates.destroy');
 
 Route::get('/admin/election_monitoring', function () {
@@ -40,11 +42,12 @@ Route::get('/profile/edit', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::get('/api/elections', [ElectionController::class, 'getElections'])->name('api.elections');
+
 
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';
