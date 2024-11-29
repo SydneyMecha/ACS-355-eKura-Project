@@ -102,17 +102,6 @@
                     </div>
                 </div>
             </div>
-            <div class="voter_turnout">
-                <div class="cards">
-                    <div class="card_heading">
-                        <h3>Voter turnout per hour</h3>
-                    </div>
-                    <hr>
-                    <div class="turnout">
-                        <canvas id="myChart"></canvas>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 

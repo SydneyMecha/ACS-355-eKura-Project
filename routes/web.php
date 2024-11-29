@@ -10,7 +10,31 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('/admin/dashboard', [ElectionController::class, 'showElectionMonitoringPage']){}->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/landing_page/about', function () {
+    return view('landing_page.about');
+});
+
+Route::get('/landing_page/contact', function () {
+    return view('landing_page.contact');
+});
+
+Route::get('/landing_page/price', function () {
+    return view('landing_page.price');
+});
+
+Route::get('/landing_page/product_details', function () {
+    return view('landing_page.product_details');
+});
+
+Route::get('/landing_page/service', function () {
+    return view('landing_page.service');
+});
+
+Route::get('/landing_page/shop', function () {
+    return view('landing_page.shop');
+});
+
+//Route::get('/admin/dashboard', [ElectionController::class, 'showDashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');

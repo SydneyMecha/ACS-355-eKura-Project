@@ -72,7 +72,7 @@ class ElectionController extends Controller
         return redirect()->route('elections.index')->with('success', 'Election updated successfully!');
     }
 
-    public function show($id)
+    public function show($id): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $election = Election::with('ballots.candidates')->findOrFail($id);
         return view('elections.show', compact('election'));
@@ -85,7 +85,7 @@ class ElectionController extends Controller
         return redirect()->route('elections.index')->with('success', 'Election deleted successfully!');
     }
 
-    public function getElections()
+    public function getElections(): \Illuminate\Http\JsonResponse
     {
         $elections = Election::all(); // Fetch all elections from the database
         return response()->json($elections);
@@ -94,7 +94,7 @@ class ElectionController extends Controller
 
 //    ELECTION MONITORING PAGE
 
-    public function showElectionMonitoringPage()
+    public function showElectionMonitoringPage(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         // Fetch active elections with their related ballots and candidates
         $elections = Election::where('status', 'active')->with(['ballots.candidates'])->get();
@@ -114,6 +114,28 @@ class ElectionController extends Controller
 
         // Return the view and pass the active elections along with their ballots
         return view('admin.election_monitoring', compact('elections'));
+    }
+
+    public function showDashboard(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    {
+        // Fetch active elections with their related ballots and candidates
+        $elections = Election::where('status', 'active')->with(['ballots.candidates'])->get();
+
+        foreach ($elections as $election) {
+            // Get all ballots for the current election
+            $ballots = Ballot::where('election_id', $election->id)->get();
+
+            // Count the number of candidates for each ballot
+            foreach ($ballots as $ballot) {
+                $ballot->candidates_count = Candidate::where('ballot_id', $ballot->id)->count();
+            }
+
+            // Attach the ballots to the election
+            $election->ballots = $ballots;
+        }
+
+        // Return the view and pass the active elections along with their ballots
+        return view('admin.dashboard', compact('elections'));
     }
 
     public function getCandidates($electionId)

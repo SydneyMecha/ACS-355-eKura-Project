@@ -15,10 +15,11 @@ select {
 }
 
 .election_card {
-    background-color: #edaa2e;
+    background-color: #1F2937;
     border-radius: 20px;
     padding: 10px;
     width: 100%;
+    color: white;
 }
 
 .election {
@@ -31,10 +32,11 @@ select {
     width: 80%;
     padding: 5px;
     border: none;
-    background-color: transparent;
+    background-color: #1F2937;;
     border-bottom: 1px solid;
     text-align: center;
     font-family: "Saira", 'Times New Roman', sans-serif;
+    color: white;
 }
 
 .election select {

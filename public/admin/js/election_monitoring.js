@@ -52,27 +52,7 @@ document.getElementById('election').addEventListener('change', function() {
 });
 
 
-const ctx = document.getElementById('myChart').getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['0', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21th', '22nd', '23rd', '24th'],
-        datasets: [{
-            label: 'Hourly voter turnout',
-            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7],
-            backgroundColor: '#edaa2e',
-            borderColor: '#edaa2e',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
+
 
 document.getElementById('election').addEventListener('change', function () {
     const selectedElectionId = this.value;
