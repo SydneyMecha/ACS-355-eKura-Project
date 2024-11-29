@@ -21,6 +21,7 @@
                             <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
                         </span>
                         <ul style="display: none;">
+                            <span><strong>Ballots for {{ $election->name }}</strong></span>
                             @forelse($election->ballots as $ballot)
                                 <li>
                                     <span class="toggle-btn">
@@ -30,6 +31,7 @@
                                         <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
                                     </span>
                                     <ul style="display: none;">
+                                        <span><strong>Candidates for {{ $ballot->ballot_name }}</strong></span>
                                         @foreach($ballot->candidates as $candidate)
                                             <a  class="body_button" onclick="viewCandidateDetails('{{ $candidate->id }}', '{{ $candidate->candidate_name }}', '{{ $candidate->party }}', '{{ $candidate->bio }}', '{{ $candidate->status }}', '{{ $candidate->created_at }}', '{{ $candidate->updated_at }}')" style="cursor: pointer">
                                                 <li>
@@ -65,6 +67,7 @@
                             <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
                         </span>
                         <ul style="display: none;">
+                            <span><strong>Ballots for {{ $election->name }}</strong></span>
                             @forelse($election->ballots as $ballot)
                                 <li>
                                     <span class="toggle-btn">
@@ -74,6 +77,7 @@
                                         <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
                                     </span>
                                     <ul style="display: none;">
+                                        <span><strong>Candidates for {{ $ballot->ballot_name }}</strong></span>
                                         @foreach($ballot->candidates as $candidate)
                                             <a  class="body_button" onclick="viewCandidateDetails('{{ $candidate->id }}', '{{ $candidate->candidate_name }}', '{{ $candidate->party }}', '{{ $candidate->bio }}', '{{ $candidate->status }}', '{{ $candidate->created_at }}', '{{ $candidate->updated_at }}')" style="cursor: pointer">
                                                 <li>
@@ -110,6 +114,7 @@
                             <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
                         </span>
                         <ul style="display: none;">
+                            <span><strong>Ballots for {{ $election->name }}</strong></span>
                             @forelse($election->ballots as $ballot)
                                 <li>
                                     <span class="toggle-btn">
@@ -119,6 +124,7 @@
                                         <i class="fa-solid fa-chevron-down" onclick="toggleDropdown(this)"></i>
                                     </span>
                                     <ul style="display: none;">
+                                        <span><strong>Candidates for {{ $ballot->ballot_name }}</strong></span>
                                         @foreach($ballot->candidates as $candidate)
                                             <a  class="body_button" onclick="viewCandidateDetails('{{ $candidate->id }}', '{{ $candidate->candidate_name }}', '{{ $candidate->party }}', '{{ $candidate->bio }}', '{{ $candidate->status }}', '{{ $candidate->created_at }}', '{{ $candidate->updated_at }}')" style="cursor: pointer">
                                                 <li>
