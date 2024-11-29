@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('admin/css/election_management.css') }}">
     <script src={{ asset("admin/js/election_management.js") }}></script>
 
-    <h1 class="mt-4">Election Management</h1>
+    <h1 class="mt-4 font-bold" style="font-size: 24px">Election Management</h1>
 
     <hr>
 

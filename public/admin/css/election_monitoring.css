@@ -1,4 +1,13 @@
+select {
+    color: black;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+
 .upper_card {
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,7 +18,7 @@
     background-color: #edaa2e;
     border-radius: 20px;
     padding: 10px;
-    width: 80%;
+    width: 100%;
 }
 
 .election {
@@ -56,9 +65,15 @@ select {
 
 .lower_card {
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     padding: 10px;
+    gap: 20px;
     /* background-color: red; */
+}
+
+.hidden {
+    display: none;
 }
 
 .cards {
@@ -66,42 +81,52 @@ select {
     border-radius: 20px;
     padding: 10px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-    height: 60vh;
+    /*height: 60vh;*/
     flex: 1;
+    width: 100%;
 }
 
 .card_heading {
     text-align: center;
 }
-
-.ballot_stats {
-    display: flex;
-    flex-direction: column;
+.ballot_overview{
+    width: 100%;
 }
-
-.ballots {
-    margin-top: 10px;
-    overflow-y: auto;
+.ballot_stats{
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    /*width: 100vh;*/
+}
+.ballots-cont {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    overflow-x: auto;
+    scroll-behavior: smooth;
     scrollbar-width: thin;
     padding: 10px;
     flex: 1;
+    white-space: nowrap;
+    gap: 20px;
 }
 
-.ballots > div {
+.ballot1 {
     background-color: white;
     border-radius: 20px;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-right: 10px;
+    width: fit-content;
+    flex-shrink: 0;
 }
 
-.ballot_name {
-    font-size: 18px;
-}
 
 .no_of_candidates {
     font-size: 13px;
 }
-
+.candidates_overview{
+    width: 100%;
+}
 .candidates {
     background-color: white;
     margin-top: 10px;
@@ -125,17 +150,23 @@ select {
 }
 
 .top_candidates {
-    background-color: white;
+    margin-top: 10px;
     border-radius: 20px;
 }
-
+.top_candidates table{
+    width: 100%;
+    font-size: 18px;
+}
 .top_candidates td {
     padding-right: 20px;
+    /*background-color: white;*/
+    width: fit-content;
 }
 
 .top_candidates table tr td:nth-child(2) {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .top_candidates p {
@@ -145,6 +176,9 @@ select {
 
 .top_candidates span {
     font-size: 12px;
+    padding: 0;
+    margin: 0;
+    align-content: center;
 }
 
 .top_candidates table tr td:nth-child(3) {
@@ -153,12 +187,76 @@ select {
 }
 
 .voter_turnout {
-    width: 40%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
 .turnout {
     width: 100%;
+    height: fit-content;
+}
+
+
+@media (max-width: 1200px) {
+    .lower_card {
+        flex-direction: column; /* Stack cards vertically on smaller screens */
+    }
+
+    .cards {
+        flex: 1 1 100%; /* Allow cards to take full width */
+        margin-bottom: 20px;
+    }
+
+    .voter_turnout {
+        width: 100%; /* Voter turnout will take full width */
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .lower_card {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cards {
+        width: 100%; /* Make the cards take full width */
+        margin-bottom: 20px;
+    }
+
+    .voter_turnout {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .ballot_name {
+        font-size: 16px; /* Decrease font size */
+    }
+}
+
+@media (max-width: 480px) {
+    .ballot_name {
+        font-size: 14px; /* Smaller font size for mobile */
+    }
+
+    .no_of_candidates {
+        font-size: 12px; /* Smaller font size */
+    }
+
+    .top_candidates p {
+        font-size: 14px; /* Decrease font size for small screens */
+    }
+
+    .top_candidates table td {
+        font-size: 14px; /* Decrease font size for small screens */
+    }
+
+    .turnout {
+        height: 300px; /* Adjust height for smaller screens */
+    }
+
+    .ballots > div {
+        flex-direction: column; /* Stack ballot items vertically on smaller screens */
+    }
 }

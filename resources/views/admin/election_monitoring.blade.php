@@ -4,9 +4,9 @@
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('admin/css/election_monitoring.css') }}">
-    <script src={{ asset("admin/js/election_monitoring.js") }}></script>
+    <script src={{ asset("admin/js/election_monitoring.js") }} defer></script>
 
-    <h1 class="mt-4">Election Monitoring</h1>
+    <h1 class="mt-4 font-bold" style="font-size: 24px">Election Monitoring</h1>
 
     <hr>
 
@@ -14,34 +14,37 @@
         <div class="upper_card">
             <div class="election_card">
                 <div class="election">
-                    <select name="election">
-                        <option value="election1">Election 1</option>
-                        <option value="election2">Election 2</option>
-                        <option value="election3">Election 3</option>
+                    <select name="election" id="election" onchange="fetchCandidates()">
+                        <option value="" disabled selected>Select an election</option>
+                        @foreach($elections as $election)
+                            <option value="{{ $election->id }}" data-end-time="{{ $election->end_datetime }}">
+                                {{ $election->name }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="election_container">
                     <div class="votes">
-                        <p class="votes_casted">5,000</p>
                         <span>Votes casted</span>
+                        <p class="votes_casted">[N/A]</p>
                     </div>
                     <div class="countdown">
                         <span>Countdown to end of election:</span>
-                        <div class="countdown-container">
+                        <div class="countdown-container" id="countdown-container">
                             <div class="countdown-item">
-                                <p id="days">00</p>
+                                <p id="countdown-days">00</p>
                                 <span>Days</span>
                             </div>
                             <div class="countdown-item">
-                                <p id="hours">00</p>
+                                <p id="countdown-hours">00</p>
                                 <span>Hours</span>
                             </div>
                             <div class="countdown-item">
-                                <p id="minutes">00</p>
+                                <p id="countdown-minutes">00</p>
                                 <span>Minutes</span>
                             </div>
                             <div class="countdown-item">
-                                <p id="seconds">00</p>
+                                <p id="countdown-seconds">00</p>
                                 <span>Seconds</span>
                             </div>
                         </div>
@@ -56,154 +59,45 @@
                         <h3>Votes per ballot</h3>
                     </div>
                     <hr>
-                    <div>
-                        <select name="ballots_list">
-                            <option value="overview" selected>Overview</option>
-                            <option value="ballot1">Ballot 1</option>
-                            <option value="ballot2">Ballot 2</option>
-                            <option value="ballot3">Ballot 3</option>
-                        </select>
-                    </div>
-                    <div class="ballots">
-                        <div class="ballot1">
-                            <p class="ballot_name">President</p>
-                            <div class="no_of_candidates">3 candidates</div>
-                            <div class="votes">
-                                <p>5,800</p>
-                                <span>votes</span>
+                    <div id="ballot-container">
+                        @foreach($elections as $election)
+                            <div class="ballots" data-election-id="{{ $election->id }}" style="display: none;">
+                                <div class="ballots-cont">
+                                    @foreach($election->ballots as $ballot)
+                                        <div class="ballot1">
+                                            <p class="ballot_name"><strong>{{ $ballot->ballot_name }}</strong></p>
+                                            <div class="no_of_candidates">{{ $ballot->candidates_count }} candidates
+                                            </div>
+                                            <div class="votes">
+                                                <p>280</p>
+                                                <span>votes</span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                        <div class="ballot1">
-                            <p class="ballot_name">President</p>
-                            <div class="no_of_candidates">3 candidates</div>
-                            <div class="votes">
-                                <p>5,800</p>
-                                <span>votes</span>
-                            </div>
-                        </div>
-                        <div class="ballot1">
-                            <p class="ballot_name">President</p>
-                            <div class="no_of_candidates">3 candidates</div>
-                            <div class="votes">
-                                <p>5,800</p>
-                                <span>votes</span>
-                            </div>
-                        </div>
-                        <div class="ballot1">
-                            <p class="ballot_name">President</p>
-                            <div class="no_of_candidates">3 candidates</div>
-                            <div class="votes">
-                                <p>5,800</p>
-                                <span>votes</span>
-                            </div>
-                        </div>
-                        <div class="ballot1">
-                            <p class="ballot_name">President</p>
-                            <div class="no_of_candidates">3 candidates</div>
-                            <div class="votes">
-                                <p>5,800</p>
-                                <span>votes</span>
-                            </div>
-                        </div>
-                        <div class="ballot1">
-                            <p class="ballot_name">President</p>
-                            <div class="no_of_candidates">3 candidates</div>
-                            <div class="votes">
-                                <p>5,800</p>
-                                <span>votes</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="candidates hidden">
-                        <table>
-                            <tr>
-                                <td rowspan="2"><img src="/images/profile.png" alt="" style="width: 50px;"></td>
-                                <td style="display: flex; gap: 5px;">
-                                    <div>James Njuguna</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>1053</p>
-                                    <span>Votes</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2"><img src="/images/profile.png" alt="" style="width: 50px;"></td>
-                                <td style="display: flex; gap: 5px;">
-                                    <div>James Njuguna</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>1053</p>
-                                    <span>Votes</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2"><img src="/images/profile.png" alt="" style="width: 50px;"></td>
-                                <td style="display: flex; gap: 5px;">
-                                    <div>James Njuguna</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>1053</p>
-                                    <span>Votes</span>
-                                </td>
-                            </tr>
-                        </table>
+                        @endforeach
                     </div>
                 </div>
             </div>
             <div class="candidates_overview">
                 <div class="candidates_stats cards">
                     <div class="card_heading">
-                        <h3>Top Candidates</h3>
+                        <h3>Candidates</h3>
                     </div>
                     <hr>
                     <div class="top_candidates">
-                        <table>
+                        <table id="candidatesTable" class="table">
+                            <thead>
                             <tr>
-                                <td><img src="/images/profile.png" alt=""></td>
-                                <td>
-                                    <p>James Njuguna</p>
-                                    <span>DITA President</p>
-                                </td>
-                                <td>
-                                    1053
-                                </td>
+                                <th>Candidate Name</th>
+                                <th>Party</th>
+                                <th>Ballot Name</th>
                             </tr>
-                            <tr>
-                                <td><img src="/images/profile.png" alt=""></td>
-                                <td>
-                                    <p>James Njuguna</p>
-                                    <span>DITA President</p>
-                                </td>
-                                <td>
-                                    1053
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><img src="/images/profile.png" alt=""></td>
-                                <td>
-                                    <p>James Njuguna</p>
-                                    <span>DITA President</p>
-                                </td>
-                                <td>
-                                    1053
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><img src="/images/profile.png" alt=""></td>
-                                <td>
-                                    <p>James Njuguna</p>
-                                    <span>DITA President</p>
-                                </td>
-                                <td>
-                                    1053
-                                </td>
-                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -222,29 +116,49 @@
         </div>
     </div>
 
-
-    <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['0', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21th', '22nd', '23rd', '24th'],
-                datasets: [{
-                    label: 'Hourly voter turnout',
-                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7],
-                    backgroundColor: '#edaa2e',
-                    borderColor: '#edaa2e',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
-
 @endsection
+
+<script>
+    function fetchCandidates() {
+        const electionId = document.getElementById('election').value;
+
+        // Clear the table body
+        const tbody = document.querySelector('#candidatesTable tbody');
+        tbody.innerHTML = '';
+
+        if (!electionId) {
+            alert('Please select an election.');
+            return;
+        }
+
+        // Fetch candidates for the selected election
+        fetch(`/elections/${electionId}/candidates`)
+            .then(response => {
+                console.log('Response:', response);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch candidates');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data:', data);
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    data.forEach(candidate => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${candidate.candidate_name}</td>
+                            <td>${candidate.party}</td>
+                            <td>${candidate.ballot_name}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while fetching candidates.');
+            });
+    }
+</script>

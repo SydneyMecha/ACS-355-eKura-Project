@@ -10,6 +10,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Route::get('/admin/dashboard', [ElectionController::class, 'showElectionMonitoringPage']){}->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -28,9 +30,12 @@ Route::post('/candidates', [CandidateController::class, 'store'])->name('candida
 Route::put('candidates/{candidate}', [CandidateController::class, 'update'])->name('candidates.update');
 Route::delete('candidates/{candidate}', [CandidateController::class, 'destroy'])->name('candidates.destroy');
 
-Route::get('/admin/election_monitoring', function () {
-    return view('admin.election_monitoring');
+Route::get('/admin/election_monitoring', [ElectionController::class, 'showElectionMonitoringPage']);
+
+Route::get('/admin/charts', function () {
+    return view('admin.charts');
 });
+
 
 Route::get('/admin/voter_management', function () {
     return view('admin.voter_management');
@@ -47,6 +52,9 @@ Route::middleware('auth')->group(function () {
 });
 
 //Route::get('/api/elections', [ElectionController::class, 'getElections'])->name('api.elections');
+
+Route::get('/ballots/{id}/candidates', [BallotController::class, 'getCandidates']);
+Route::get('/elections/{election}/candidates', [ElectionController::class, 'getCandidates']);
 
 
 require __DIR__.'/auth.php';

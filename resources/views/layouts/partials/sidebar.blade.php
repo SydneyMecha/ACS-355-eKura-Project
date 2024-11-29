@@ -8,26 +8,32 @@
 
             <div class="sb-sidenav-menu-heading">Elections</div>
             <a class="nav-link" href="{{ url('/elections') }}">
-                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="sb-nav-link-icon"><i class="fa-solid fa-sliders"></i></div>
                 Election Management
             </a>
+
             <a class="nav-link" href="{{ url('/admin/election_monitoring') }}">
-                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="sb-nav-link-icon"><i class="fa-solid fa-check-to-slot"></i></div>
                 Election Monitoring
             </a>
 
             <a class="nav-link" href="{{ url('/admin/voter_management') }}">
-                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="sb-nav-link-icon"><i class="fa-solid fa-users-line"></i></div>
                 Voter Management
+            </a>
+
+            <a class="nav-link" href="{{ url('/admin/charts') }}">
+                <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-area"></i></div>
+                Charts
             </a>
 
             <div class="sb-sidenav-menu-heading">Support and Maintenance</div>
             <a class="nav-link" href="#">
-                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="sb-nav-link-icon"><i class="fa-solid fa-headset"></i></div>
                 Support
             </a>
-            <a class="nav-link" href="#">
-                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            <a class="nav-link" href="{{ url('/profile/edit') }}">
+                <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
                 Account
             </a>
         </div>

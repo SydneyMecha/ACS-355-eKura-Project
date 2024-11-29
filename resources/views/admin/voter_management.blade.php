@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 
-@section('title', 'Election Management')
+@section('title', 'Voter Management')
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('admin/css/voter_management.css') }}">
 
-    <h1 class="mt-4">Voter Management</h1>
+    <h1 class="mt-4 font-bold" style="font-size: 24px">Voter Management</h1>
 
-    <hr>
+    <hr class="mb-4">
 
     <div class="cards">
         <div class="card voter_stats">
@@ -19,7 +19,8 @@
                 <span>Total Registered Voters</span>
                 <span style="font-size: 25px;"><b>1000</b></span>
             </div>
-            <div>
+            <hr>
+            <div class="tables">
                 <table>
                     <tr>
                         <td rowspan="2">
@@ -27,7 +28,6 @@
                         </td>
                         <td colspan="2">Invited</td>
                     </tr>
-                    <hr>
                     <tr>
                         <td>1000</td>
                         <td style="border-left: 1px solid;">100%</td>
@@ -42,6 +42,8 @@
                         <td>800</td>
                         <td style="border-left: 1px solid;">80%</td>
                     </tr>
+                </table>
+                <table>
                     <tr>
                         <td rowspan="2">
                             <div class="canvas"><canvas id="pendingVerification"></canvas>

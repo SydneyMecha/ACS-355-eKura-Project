@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ballot;
+use App\Models\Candidate;
 use Illuminate\Http\Request;
 
 class BallotController extends Controller
@@ -58,4 +59,12 @@ class BallotController extends Controller
 
         return redirect()->route('elections.index')->with('success', 'Ballot updated successfully!');
     }
+
+
+    public function getCandidates($id)
+    {
+        $candidates = Candidate::where('ballot_id', $id)->get();
+        return response()->json($candidates);
+    }
+
 }
