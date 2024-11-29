@@ -168,11 +168,11 @@ function viewBallotDetails(id, ballot_name, ballot_description, status, created_
     document.getElementById('viewBallotModal').style.display = 'flex';
 
     // Fill modal fields with data
-    document.getElementById('viewBallotName').innerText = name || 'No Name Provided';
-    document.getElementById('viewBallotDescription').innerText = description || 'No Description Provided';
+    document.getElementById('viewBallotName').innerText = ballot_name || 'No Name Provided';
+    document.getElementById('viewBallotDescription').innerText = ballot_description || 'No Description Provided';
     document.getElementById('viewStatus').innerText = status || 'N/A';
-    document.getElementById('viewBallotCreatedAt').innerText = createdAt || 'N/A';
-    document.getElementById('viewBallotUpdatedAt').innerText = updatedAt || 'N/A';
+    document.getElementById('viewBallotCreatedAt').innerText = created_at || 'N/A';
+    document.getElementById('viewBallotUpdatedAt').innerText = updated_at || 'N/A';
 
     document.getElementById('editBallotName').value = ballot_name;
     document.getElementById('editBallotDescription').value = ballot_description;
